@@ -103,8 +103,8 @@ resource "aws_elb" "webapp_elb" {
 
 resource "aws_autoscaling_group" "webapp_asg" {
   lifecycle {
-    create_before_destroy = true
-    #create_before_destroy = false
+    # create_before_destroy = true
+    create_before_destroy = false
   }
 
   vpc_zone_identifier   = data.terraform_remote_state.networking.outputs.public_subnets
@@ -186,7 +186,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   alarm_actions     = [aws_autoscaling_policy.scale_down.arn]
 }
 
-## Database Config 
+## Database Config
 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "${terraform.workspace}-ddt-rds-subnet-group"
